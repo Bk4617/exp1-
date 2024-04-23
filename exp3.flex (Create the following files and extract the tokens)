@@ -1,0 +1,34 @@
+file1.star
+integer num1, num2, sum;
+read num1, num2;
+sum = num1 + num2;
+display sum;
+file2.star
+integer a, b;
+read a, b;
+if (a &gt; b) then
+{
+display a;
+}
+else
+{
+display b;
+}
+
+file3.star
+integer i, n;
+read n;
+i=1;
+while (i &lt;= n)
+{
+display i;
+i++;
+}
+
+file4.star
+integer i, n;
+read n;
+for i = 1 to n step 2
+{
+display a;
+}
