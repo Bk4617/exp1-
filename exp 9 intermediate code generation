@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+public class IntermediateCodeGenerator {
+    private static int labelCount = 0;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter an if statement or a while loop:");
+        String userInput = scanner.nextLine();
+
+        String intermediateCode = generateIntermediateCode(userInput);
+        System.out.println("Intermediate Code:");
+        System.out.println(intermediateCode);
+    }
+
+    public static String generateIntermediateCode(String userInput) {
+        StringBuilder intermediateCode = new StringBuilder();
+
+        // Assuming user input is a simple if statement or while loop
+        if (userInput.startsWith("if")) {
+            intermediateCode.append(generateIfCode(userInput));
+        } else if (userInput.startsWith("while")) {
+            intermediateCode.append(generateWhileCode(userInput));
+        } else {
+            intermediateCode.append("Invalid input. Please enter a valid if statement or while loop.");
+        }
+
+        return intermediateCode.toString();
+    }
+
+    public static String generateIfCode(String input) {
+        // Assuming input format is: if (condition) { ... }
+        String condition = input.substring(input.indexOf('(') + 1, input.indexOf(')'));
+        String trueLabel = generateLabel();
+        String falseLabel = generateLabel();
+
+        StringBuilder code = new StringBuilder();
+        code.append("if ").append(condition).append(" goto ").append(trueLabel).append(" else goto ").append(falseLabel);
+        code.append("\n").append(trueLabel).append(":");
+        // Assuming intermediate code for if body follows
+        code.append("\n").append("// Intermediate code for true branch");
+        code.append("\n").append(falseLabel).append(":");
+        // Assuming intermediate code for false branch follows
+        code.append("\n").append("// Intermediate code for false branch");
+
+        return code.toString();
+    }
+
+    public static String generateWhileCode(String input) {
+        // Assuming input format is: while (condition) { ... }
+        String condition = input.substring(input.indexOf('(') + 1, input.indexOf(')'));
+        String loopLabel = generateLabel();
+        String exitLabel = generateLabel();
+
+        StringBuilder code = new StringBuilder();
+        code.append(loopLabel).append(": if ").append(condition).append(" goto ").append(exitLabel).append(" else goto ").append(loopLabel);
+        code.append("\n").append("// Intermediate code for loop body");
+        code.append("\n").append("goto ").append(loopLabel);
+        code.append("\n").append(exitLabel).append(":");
+
+        return code.toString();
+    }
+
+    public static String generateLabel() {
+        return "L" + labelCount++;
+    }
+}
+
+input
